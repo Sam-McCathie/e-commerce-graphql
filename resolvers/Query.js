@@ -5,7 +5,17 @@
 // - context -> pass data from index file then destructure for use in queries
 exports.Query = {
   basic: (parent, args, context) => "Hello",
-  products: (parent, args, {products}) => products,
+  products: (parent, {filter}, {products}) => {
+    let filteredProducts = products;
+    if (filter) {
+      if (filter.onSale === true) {
+        filteredProducts = filteredProducts.filter((product) => {
+          return product.onSale;
+        });
+      }
+    }
+    return filteredProducts;
+  },
   product: (parent, args, context) => {
     // destructure option 1
     const {id} = args;

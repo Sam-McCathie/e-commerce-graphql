@@ -13,33 +13,20 @@ query {
   }
 }
 
+# Query all products that are on sale with filter
+query {
+  products(filter: {onSale: true}) {
+    name
+    onSale
+  }
+}
+
 # Query for a single product example
 query {
   product(id: "c2af9adc-d0b8-4d44-871f-cef66f86f7f6") {
     name
     image
     price
-  }
-}
-
-#Query all categories
-query {
-  categories {
-    id
-    name
-  }
-}
-
-#Query a single category
-# - return all products within the category
-query {
-  category(id: "d914aec0-25b2-4103-9ed8-225d39018d1d") {
-    id
-    name
-    products {
-      name
-      price
-    }
   }
 }
 
@@ -60,6 +47,27 @@ query {
     reviews {
       title
       comment
+    }
+  }
+}
+
+#Query all categories
+query {
+  categories {
+    id
+    name
+  }
+}
+
+#Query a single category
+# - return all products within the category
+query {
+  category(id: "d914aec0-25b2-4103-9ed8-225d39018d1d") {
+    id
+    name
+    products {
+      name
+      price
     }
   }
 }
