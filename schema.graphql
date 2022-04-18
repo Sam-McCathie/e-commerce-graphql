@@ -1,0 +1,23 @@
+# Storing GraphQl queries for reference
+
+# All product data
+query {
+  products {
+    id
+    name
+    description
+    quantity
+    price
+    image
+    onSale
+  }
+}
+
+# Query for a single product example
+query {
+  product(id: "c2af9adc-d0b8-4d44-871f-cef66f86f7f6") {
+    name
+    image
+    price
+  }
+}

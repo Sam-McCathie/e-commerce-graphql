@@ -1,53 +1,41 @@
 const {ApolloServer, gql} = require("apollo-server");
+const {products} = require("./data.js");
 
-// Scaler types
-// - String
-// - Int
-// - Float
-// - Boolean
-// - ID
-
-// Arrays
-// - could pass the above types instead of string
-// - []! - means null cannot be returned instead of the array
-
-// Type definitions of data/ how it is going to look
-// adds type safety
-// ! - prevents null values from being returned
-
-// Product type defines an object.
+//type definitions describes how the data will look.
 const typeDefs = gql`
   type Query {
-    aString: String!
+    basic: String
     products: [Product!]!
+    product(id: String!): Product
   }
 
   type Product {
+    id: ID!
     name: String!
     description: String!
+    image: String!
     quantity: Int!
     price: Float!
     onSale: Boolean!
   }
 `;
 
-// Resolvers return the data
-// resolver names must match the type definitions above
+// resolvers use the names from the type definition and returns the data
+// resolvers have 3 parameters
+// - parent
+// - args
+// - context
 const resolvers = {
   Query: {
-    aString: () => {
-      return "World!@";
-    },
+    basic: () => "Hello",
     products: () => {
-      return [
-        {
-          name: "Chair",
-          description: "Ergonomic",
-          quantity: 5,
-          price: 300,
-          onSale: false,
-        },
-      ];
+      return products;
+    },
+    product: (parent, args, context) => {
+      const {id} = args;
+      const product = products.find((product) => product.id === id);
+      if (!product) return null;
+      return product;
     },
   },
 };
