@@ -52,3 +52,14 @@ query {
     }
   }
 }
+
+#Query a single item and the reviews associated
+query {
+  product(id: "c2af9adc-d0b8-4d44-871f-cef66f86f7f6") {
+    name
+    reviews {
+      title
+      comment
+    }
+  }
+}
