@@ -31,9 +31,24 @@ query {
 }
 
 #Query a single category
+# - return all products within the category
 query {
-  category(id: "34115aac-0ff5-4859-8f43-10e8db23602b") {
+  category(id: "d914aec0-25b2-4103-9ed8-225d39018d1d") {
     id
     name
+    products {
+      name
+      price
+    }
+  }
+}
+
+#Query single item -> return category name
+query {
+  product(id: "404daf2a-9b97-4b99-b9af-614d07f818d7") {
+    name
+    category {
+      name
+    }
   }
 }

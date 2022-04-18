@@ -19,18 +19,21 @@ const typeDefs = gql`
     quantity: Int!
     price: Float!
     onSale: Boolean!
+    categoryId: String!
+    category: Category
   }
 
   type Category {
     id: ID!
     name: String
+    products: [Product!]!
   }
 `;
 
 // resolvers use the names from the type definition and returns the data
 // resolvers have 3 parameters
-// - parent
-// - args
+// - parent -> accesss the values from the parent
+// - args -> access the args passed to the resolver
 // - context
 const resolvers = {
   Query: {
@@ -44,6 +47,20 @@ const resolvers = {
     category: (parent, args, context) => {
       const {id} = args;
       return cats.find((category) => category.id === id);
+    },
+  },
+
+  Category: {
+    products: (parent, args, context) => {
+      const {id} = parent;
+      return products.filter((product) => product.categoryId === id);
+    },
+  },
+
+  Product: {
+    category: (parent, args, context) => {
+      const {categoryId} = parent;
+      return cats.find((category) => category.id === categoryId);
     },
   },
 };
