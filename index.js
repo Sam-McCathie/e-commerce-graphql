@@ -1,5 +1,5 @@
 const {ApolloServer, gql} = require("apollo-server");
-const {products} = require("./data.js");
+const {products, categories: cats} = require("./data.js");
 
 //type definitions describes how the data will look.
 const typeDefs = gql`
@@ -7,6 +7,8 @@ const typeDefs = gql`
     basic: String
     products: [Product!]!
     product(id: String!): Product
+    categories: [Category!]!
+    category(id: String!): Category
   }
 
   type Product {
@@ -18,6 +20,11 @@ const typeDefs = gql`
     price: Float!
     onSale: Boolean!
   }
+
+  type Category {
+    id: ID!
+    name: String
+  }
 `;
 
 // resolvers use the names from the type definition and returns the data
@@ -28,14 +35,15 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     basic: () => "Hello",
-    products: () => {
-      return products;
-    },
+    products: () => products,
     product: (parent, args, context) => {
       const {id} = args;
-      const product = products.find((product) => product.id === id);
-      if (!product) return null;
-      return product;
+      return products.find((product) => product.id === id);
+    },
+    categories: () => cats,
+    category: (parent, args, context) => {
+      const {id} = args;
+      return cats.find((category) => category.id === id);
     },
   },
 };

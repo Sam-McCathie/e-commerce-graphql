@@ -21,3 +21,19 @@ query {
     price
   }
 }
+
+#Query all categories
+query {
+  categories {
+    id
+    name
+  }
+}
+
+#Query a single category
+query {
+  category(id: "34115aac-0ff5-4859-8f43-10e8db23602b") {
+    id
+    name
+  }
+}
