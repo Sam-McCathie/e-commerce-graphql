@@ -7,15 +7,27 @@ const {ApolloServer, gql} = require("apollo-server");
 // - Boolean
 // - ID
 
+// Arrays
+// - could pass the above types instead of string
+// - []! - means null cannot be returned instead of the array
+
 // Type definitions of data/ how it is going to look
 // adds type safety
 // ! - prevents null values from being returned
+
+// Product type defines an object.
 const typeDefs = gql`
   type Query {
     aString: String!
-    anInt: Int
-    aFloat: Float
-    aBoolean: Boolean
+    products: [Product!]!
+  }
+
+  type Product {
+    name: String!
+    description: String!
+    quantity: Int!
+    price: Float!
+    onSale: Boolean!
   }
 `;
 
@@ -26,14 +38,16 @@ const resolvers = {
     aString: () => {
       return "World!@";
     },
-    anInt: () => {
-      return 2022;
-    },
-    aFloat: () => {
-      return 1.5;
-    },
-    aBoolean: () => {
-      return true;
+    products: () => {
+      return [
+        {
+          name: "Chair",
+          description: "Ergonomic",
+          quantity: 5,
+          price: 300,
+          onSale: false,
+        },
+      ];
     },
   },
 };
